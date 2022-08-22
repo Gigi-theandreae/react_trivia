@@ -4,13 +4,16 @@ import QuestionCard from './components/QuestionCard';
 import TopSheet from './TopSheet';
 import Confetti from 'react-confetti';
 import decodeHtml from './helpers';
+import useWindowDimensions from './hooks/getWindowDimensions';
 
 function App() {
 const [questions, setQuestions] = useState([])
 const [finalAnswers, setFinalAnswers] = useState(false)
 const [numCorrect, setNumCorrect] = useState(0)
 const [gameStarted, setGameStarted] = useState(false)
-const [options, setOptions] = useState(null)
+const [options, setOptions] = useState({difficulty: "mixed"})
+const {height, width} = useWindowDimensions()
+
 
 // Create a function to randomize the answers array
 function setRandom(array) {
@@ -37,7 +40,7 @@ console.log(options)
 
 async function getData(){
   //Make api call with "options" variable to set difficulty
-  let url = !options || options.difficulty === "mixed" ? "https://opentdb.com/api.php?amount=5" : `https://opentdb.com/api.php?amount=5&difficulty=${options.difficulty}`;
+  let url = !options.difficulty === null || options.difficulty === "mixed" ? "https://opentdb.com/api.php?amount=5" : `https://opentdb.com/api.php?amount=5&difficulty=${options.difficulty}`;
   let res =  await fetch(url);
   let {results} = await res.json();
 
@@ -62,7 +65,7 @@ async function getData(){
 // Fetch initial data and synch it with the difficulty level the user chooses
 useEffect(() => {
   getData()
-}, [options])
+}, [options, gameStarted])
 
 
 function setChosen(questionIndex, answerIndex) {
@@ -101,7 +104,7 @@ function checkAnswers(){
 
 
 function setDifficulty(value){
-  console.log(value)
+  setNumCorrect(0)
   setOptions(prev => {
     if(prev === value){
       resetGame()
@@ -120,6 +123,7 @@ function resetGame(){
   setFinalAnswers(false)
   setNumCorrect(0)
   getData()
+  window.scrollTo(0, 0);
 }
 
 function setDifficultyColor(difficulty){
@@ -140,8 +144,7 @@ function setDifficultyColor(difficulty){
 
   return gameStarted ? (
     <div className="App">
-    {numCorrect === questions.length && <Confetti style={{margin: "auto"}} width={1200} height={1000}/>}
-    <h1>Good Luck and Have Fun!</h1>
+    {numCorrect === questions.length && <Confetti style={{margin: "auto"}} width={width} height={height}/>}
     <h2> Difficulty: <span style={setDifficultyColor(options.difficulty)}><em>{options.difficulty}</em></span></h2>
     {questions.map((question, index) => {
       return <QuestionCard
@@ -152,9 +155,11 @@ function setDifficultyColor(difficulty){
        gameOver={finalAnswers} 
        setChosen={(answerIndex) => setChosen(index, answerIndex)}/>
     })}
-    {finalAnswers ? <h1>You scored {numCorrect} out of {questions.length} correct!</h1> : ""}
-    <button onClick={finalAnswers ? resetGame : checkAnswers}>{finalAnswers ? "Play Again!" : "Check Answers!"}</button>
-    {finalAnswers && <button onClick={toggleStartQuiz}>Home/Choose Options</button>}
+    <div className="buttonContainer">
+    {finalAnswers ? <h2>You scored {numCorrect}/{questions.length} correct answers</h2> : ""}
+    <button className='checkAnswers' onClick={finalAnswers ? resetGame : checkAnswers}>{finalAnswers ? "Play Again!" : "Check Answers!"}</button>
+    {finalAnswers && <button className='home-button' onClick={toggleStartQuiz}>Home/Options</button>}
+    </div>
     </div>
   ) : <TopSheet setDifficulty={setDifficulty} startQuiz={toggleStartQuiz} />
 }

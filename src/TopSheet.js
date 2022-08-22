@@ -23,17 +23,17 @@ function TopSheet(props) {
     }
 
   return (
-    <div>
+    <div className='TopSheet'>
         <h1>Quizzical</h1>
         {/* <label htmlFor="difficulty">Difficulty</label> */}
         <select name="difficulty" id="difficulty" onChange={handleChange}>
-            <option value="null">Difficulty</option>
+            <option value="mixed">Difficulty</option>
             <option value="mixed">Mixed</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
         </select>
-        <button onClick={props.startQuiz}>Start Quiz</button>
+        <button className='start' onClick={props.startQuiz}>Start Quiz!</button>
     </div>
   )
 }

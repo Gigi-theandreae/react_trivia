@@ -2,14 +2,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  text-align: center;;
+  text-align: center;
 }
 
-.App {
+.App, .TopSheet {
   padding: 2rem;
+  background: url('./images/quizbackground-03.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.App h2 {
+.App h3 {
   color: rgba(0, 0, 0, 0.74);
   margin-top: 3rem;
 }
@@ -23,8 +27,26 @@
   color: white;
 }
 
+.buttonContainer button {
+  display: inline-block; 
+  padding: .5rem 1.2rem;
+  background-color: rgb(7, 139, 156);
+  border: 1px solid transparent;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  transition: all .1s linear; 
+}
+
+.checkAnswers {
+  margin-left: auto;
+}
+
 .QuestionCard {
- 
+ border-bottom: 1px solid rgba(7, 139, 156, 0.295);
+ max-width: 900px;
+ margin: auto;
+ padding: 0 0 2rem;;
 }
 
 .Answer {
@@ -38,6 +60,7 @@
   font-weight: 600;
   color: rgb(16, 102, 114);
   letter-spacing: .8px;
+  transition: border .1s linear;
 }
 
 .Answer:active {
@@ -46,3 +69,91 @@
   box-shadow: 0px 5px 10px grey;
 }
 
+.Answer:hover{
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 5px navy;
+  cursor: pointer;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 900px;
+  margin: auto;
+  padding: 2rem 4rem;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.buttonContainer h2 {
+  color: rgba(0, 0, 0, 0.74);
+}
+
+.buttonContainer button:hover {
+  background: navy;
+}
+
+.TopSheet {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.TopSheet h1 {
+  font-size: 4rem;
+  color: navy;
+}
+
+.TopSheet select{
+  padding: .5rem 1rem;
+  background: rgb(7, 139, 156);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.TopSheet .start {
+  margin-top: 5rem;
+  padding: .8rem 3rem;
+  background: navy;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .buttonContainer, .QuestionCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .buttonContainer button, .buttonContainer h2 {
+    margin: auto;
+    width: 100%;
+  }
+
+  .Answer {
+    padding: .5rem;
+    width: 50%;
+  }
+
+  .Answer:first-of-type{
+    margin-top: 20px;
+  }
+ 
+}
+
+@media screen and (max-width: 700px) {
+  .Answer {
+    width: 80%;
+    padding: .5rem;
+  }
+}

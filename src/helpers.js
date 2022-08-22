@@ -12,7 +12,8 @@ export default function decodeHtml(str){
         '&rsquo;': "'",
         '&uuml;': 'ü',
         '&pi;': '	π',
-        '&Prime;': '′',
+        '&Prime;': '″',
+        '&prime;': '′',
         '&iacute;': 'í',
         '&sup2;': '²',
         '&ouml;': 'ö',
@@ -28,7 +29,13 @@ export default function decodeHtml(str){
         '&uacute;': 'ú',
         '&Delta;': 'Δ',
         '&Eacute;': 'É',
-        '&ndash;': '–'
+        '&ndash;': '–',
+        '&lsquo;': '‘',
+        '&atilde;': 'ã',
+        '&ntilde;': 'ñ',
+        '&ocirc;': 'ô',
+        '&hellip;': '…',
+        '&divide;': '÷'
     };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;|&eacute;|&rsquo;|&uuml;|&pi;|&Prime;|&iacute;|&sup2;|&ouml;|&deg;|&shy;|&aacute;|&Uuml;|&micro;|&ldquo;|&rdquo;|&oacute;|&ecirc;|&uacute;|&Delta;|&Eacute;|&ndash;/g, (m) => map[m]);
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;|&eacute;|&rsquo;|&uuml;|&pi;|&Prime;|&iacute;|&sup2;|&ouml;|&deg;|&shy;|&aacute;|&Uuml;|&micro;|&ldquo;|&rdquo;|&oacute;|&ecirc;|&uacute;|&Delta;|&Eacute;|&ndash;|&lsquo;|&atilde;|&ntilde;|&ocirc;|&prime;|&hellip;|&divide;/g, (m) => map[m]);
 }
